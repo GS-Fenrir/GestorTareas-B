@@ -3,10 +3,11 @@ import java.util.Scanner;
 
 public class Main {
     static ArrayList<String> tareas = new ArrayList<>();
-    static String MENU = "    /---MENÚ---\\    \n" +
-        "   1. Agregar tarea.\n" +
+    static String MENU = "\n\n    /---MENÚ---\\    \n" +
+        "   1. Agregar tareas.\n" +
         "   2. Eliminar tarea.\n" +
-        "   3. Salir.\n" +
+        "   3. Lista tareas.\n" +
+        "   4. Salir.\n" +
         "Elige una opción: ";
     public static void main(String[] args) throws Exception {
         mainMenu();
@@ -16,16 +17,52 @@ public class Main {
         Scanner input = new Scanner(System.in);
         System.out.print(MENU);
         int opt = input.nextInt();
+        input.nextLine();
         
         switch(opt){
-            case 1 -> System.out.println();
-            case 2 -> System.out.println();
-            case 3 -> end();
+            case 1 -> {
+                boolean stop = false;
+                while(!stop){
+                    System.out.print("Introduce el nombre de la tarea (q para terminar): ");
+                    String tarea = input.nextLine();
+                    if(tarea.equals("q")){
+                        stop = true;
+                        mainMenu();
+                    }
+                    else{
+                        agregarTarea(tarea);
+                        System.out.println("Tarea agregada.");
+                    }
+                }
+            }
+            case 2 -> {
+                System.out.print("Introduce el índice de la tarea a eliminar: ");
+                int t = input.nextInt();
+                input.nextLine();
+                eliminarTarea(t);
+            }
+            case 3 -> listarTareas();
+            case 4 -> end();
         }
     }
 
-    public static void agregarTarea(){
-        tareas.add("tarea1");
+    public static void agregarTarea(String tarea){
+        tareas.add(tarea);
+    }
+
+    public static void eliminarTarea(int index){
+        tareas.remove(index-1);
+        mainMenu();
+    }
+
+    public static void listarTareas(){
+        System.out.println("\n");
+        if (tareas.isEmpty()) System.out.println("No hay tareas que listar.");
+        else System.out.println("--Lista de tareas--");
+        for (int i = 0; i < tareas.size() && !tareas.isEmpty(); i++){
+            System.out.println((i+1) + ". " + tareas.get(i));
+        }
+        mainMenu();
     }
 
     public static void end(){
