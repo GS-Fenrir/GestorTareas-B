@@ -2,6 +2,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
+
     static ArrayList<String> tareas = new ArrayList<>();
     static String MENU = "\n\n    /---MENÚ---\\    \n" +
         "   1. Agregar tareas.\n" +
@@ -45,7 +46,9 @@ public class Main {
             case 4 -> end();
         }
     }
-
+        public static void agregarTarea(String tarea){
+        tareas.add(tarea);
+    }
     public static void end(){
         System.out.println("Sesión finalizada");
     }
